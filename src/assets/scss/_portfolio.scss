@@ -1,0 +1,54 @@
+.bg-black {
+  background: black;
+  color: white;
+}
+.navbar-brand h1 {
+  color: #fff;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+#portfolio-main-header {
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .port-item {
+  }
+
+  .card:hover {
+    opacity: 0.8;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+}
+
+.portfolio-display5 {
+  font-weight: 300;
+  font-size: 1.6rem;
+}
+
+#portfolio-resume {
+  .card-title,
+  .card-text {
+    color: black;
+  }
+}
+
+@media (min-width: 1199px) {
+  .port-item {
+    padding: 4rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .portfolio-display5 {
+    font-size: 1.9rem;
+  }
+  /*html{
+    font-size: 14px;
+}*/
+}

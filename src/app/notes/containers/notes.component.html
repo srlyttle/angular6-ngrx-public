@@ -1,0 +1,63 @@
+<ng-container *ngIf="!(loaded$ | async)">
+  <app-notes-navigation-actions></app-notes-navigation-actions>
+  <!-- POSTS -->
+  <section id="notes-body">
+    <div class="container py-2">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-header"><h4 xauto-notes-header>Notes</h4></div>
+            <table *ngIf="filter" class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th class="d-none d-sm-table-cell">#</th>
+                  <th>
+                    <input
+                      class="form-control"
+                      type="text"
+                      [(ngModel)]="filter.title"
+                      name="title"
+                      placeholder="Title"
+                    />
+                  </th>
+                  <th class="d-none d-sm-table-cell">
+                    <input
+                      class="form-control"
+                      type="text"
+                      [(ngModel)]="filter.technology"
+                      name="technology"
+                      placeholder="Technology"
+                    />
+                  </th>
+                  <th class="d-none d-sm-table-cell">
+                    <input
+                      class="form-control"
+                      [(ngModel)]="filter.subjectArea"
+                      type="text"
+                      name="subjectArea"
+                      placeholder="Subject Area"
+                    />
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr xauto-note-row *ngFor="let note of (notes$ | async | myfilter: filter); let i = index">
+                  <td class="d-none d-sm-table-cell">{{ i + 1 }}</td>
+                  <td style="max-width: 200px;">{{ note.title }}</td>
+                  <td class="d-none d-sm-table-cell">{{ note.technology }}</td>
+                  <td class="d-none d-sm-table-cell">{{ note.subjectArea }}</td>
+                  <td>
+                    <a [routerLink]="['detail', note._id]" class="btn btn-outline-secondary">
+                      <i class="fa fa-caret-right"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-container>

@@ -1,0 +1,163 @@
+<!-- DETAILS -->
+<ng-container *ngIf="(subjectAreas$ | async) as formLookupLists">
+  <div *ngIf="noteForm">
+    <form [formGroup]="noteForm" (ngSubmit)="onSubmit()" novalidate>
+      <app-notes-navigation-actions></app-notes-navigation-actions>
+
+      <section id="details">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="card">
+                <div class="card-header"><h4>Edit Note</h4></div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input
+                      formControlName="title"
+                      type="text"
+                      name="title"
+                      class="form-control"
+                      id="title"
+                      [ngClass]="{ 'is-invalid': submitted && f.title.errors }"
+                      placeholder="title"
+                    />
+                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                      <div *ngIf="f.title.errors.minlength">Title must be at least 5 characters</div>
+                      <div *ngIf="f.title.errors.required">Tile is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="content">content</label>
+                    <textarea
+                      formControlName="content"
+                      rows="3"
+                      name="content"
+                      class="form-control"
+                      id="content"
+                      placeholder="content"
+                      [ngClass]="{ 'is-invalid': submitted && f.content.errors }"
+                    ></textarea>
+                    <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+                      <div *ngIf="f.content.errors.minlength">Content must be at least 10 characters</div>
+                      <div *ngIf="f.content.errors.required">Content is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group collapse"></div>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">course</label>
+                    <select
+                      formControlName="course"
+                      class="form-control"
+                      id="course"
+                      [ngClass]="{ 'is-invalid': submitted && f.course.errors }"
+                    >
+                      <option *ngFor="let course of (courseList$ | async)" [value]="course">{{ course }}</option>
+                    </select>
+                    <div *ngIf="submitted && f.course.errors" class="invalid-feedback">
+                      <div *ngIf="f.course.errors.minlength">course must be at least 5 characters</div>
+                      <div *ngIf="f.course.errors.required">course is required</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="courseSection">courseSection</label>
+                    <input
+                      formControlName="courseSection"
+                      type="text"
+                      name="courseSection"
+                      class="form-control"
+                      id="courseSection"
+                      placeholder="courseSection"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Projects</label>
+                    <select formControlName="project" class="form-control" id="project">
+                      <option *ngFor="let project of (projectList$ | async)" [value]="project">{{ project }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Technologies</label>
+                    <select
+                      formControlName="technology"
+                      class="form-control"
+                      id="technology"
+                      [ngClass]="{ 'is-invalid': submitted && f.technology.errors }"
+                    >
+                      <option *ngFor="let technology of (technologyList$ | async)" [value]="technology">{{
+                        technology
+                      }}</option>
+                    </select>
+                    <div *ngIf="submitted && f.technology.errors" class="invalid-feedback">
+                      <div *ngIf="f.technology.errors.required">Technology is required</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">subjectArea</label>
+                    <select
+                      formControlName="subjectArea"
+                      class="form-control"
+                      id="subjectArea"
+                      [ngClass]="{ 'is-invalid': submitted && f.subjectArea.errors }"
+                    >
+                      <option *ngFor="let subjectArea of (subjectAreas$ | async)" [value]="subjectArea">{{
+                        subjectArea
+                      }}</option>
+                    </select>
+                    <div *ngIf="submitted && f.subjectArea.errors" class="invalid-feedback">
+                      <div *ngIf="f.subjectArea.errors.required">subjectArea is required</div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">gitRepo</label>
+                    <select formControlName="gitRepo" class="form-control" id="gitRepo">
+                      <option *ngFor="let gitRepo of (gitRepoList$ | async)" [value]="gitRepo">{{ gitRepo }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="gitCommit">gitCommit</label>
+                    <input
+                      formControlName="gitCommit"
+                      type="text"
+                      name="gitCommit"
+                      class="form-control"
+                      id="gitCommit"
+                      placeholder="gitCommit"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <app-ngx-editor [config]="editorConfig" formControlName="htmlContent"></app-ngx-editor>
+                  </div>
+
+                  <section id="actions" class="py-4 mb-4 bg-light">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-4 py-1">
+                          <button (click)="cancel()" type="button" class="btn btn-info btn-block">
+                            <i class="fas fa-arrow-left"></i> Cancel
+                          </button>
+                        </div>
+                        <div class="col-md-4 py-1">
+                          <button type="submit" class="btn btn-success btn-block">
+                            <i class="fas fa-arrow-left"></i> Save
+                          </button>
+                        </div>
+                        <div class="col-md-4 py-1">
+                          <button (click)="delete()" type="submit" class="btn btn-danger btn-block">
+                            <i class="fas fa-arrow-left"></i> Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </div>
+</ng-container>

@@ -1,0 +1,52 @@
+<div class="container" *ngIf="(technologies$ | async) as formLookupLists">
+  <h5>Add Subject Area</h5>
+  <form [formGroup]="subjectAreaForm" (ngSubmit)="onSubjectSubmit()" novalidate>
+    <div class="form-group">
+      <label for="title">Name</label>
+      <input
+        formControlName="name"
+        type="text"
+        name="name"
+        class="form-control"
+        id="name"
+        [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+        placeholder="name"
+      />
+      <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+        <div *ngIf="f.name.errors.minlength">name must be at least 5 characters</div>
+        <div *ngIf="f.name.errors.required">name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Technologies</label>
+      <select
+        formControlName="technology"
+        class="form-control"
+        id="technology"
+        [ngClass]="{ 'is-invalid': submitted && f.technology.errors }"
+      >
+        <option *ngFor="let technology of (technologies$ | async)" [value]="technology">{{ technology }}</option>
+      </select>
+      <div *ngIf="submitted && f.technology.errors" class="invalid-feedback">
+        <div *ngIf="f.technology.errors.minlength">technology must be at least 5 characters</div>
+        <div *ngIf="f.technology.errors.required">technology is required</div>
+      </div>
+    </div>
+    <section id="actions" class="py-4 mb-4 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <button type="submit" class="btn btn-success btn-block">
+              <i class="fas fa-arrow-left"></i> Add Subject
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button (click)="bsModalRef.hide()" type="button" class="btn btn-danger btn-block">
+              <i class="fas fa-arrow-left"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+</div>

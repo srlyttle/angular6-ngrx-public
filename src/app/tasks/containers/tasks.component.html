@@ -1,0 +1,102 @@
+<!-- HEADER -->
+<!-- HEADER -->
+<header id="main-header" class="py-2 bg-secondary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+
+<section id="actions" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <button (click)="goToRoute('/add')" type="button" class="btn btn-info btn-block">
+          <i class="fas fa-arrow-left"></i> Start Task
+        </button>
+      </div>
+      <div class="col-md-3">
+        <button (click)="goToRoute('/notes/add')" type="submit" class="btn btn-success btn-block">
+          <i class="fas fa-arrow-left"></i> Add Note
+        </button>
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-danger btn-block"><i class="fas fa-arrow-left"></i> Admin</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POSTS -->
+<section id="tasks" *ngIf="(tasks$ | async)">
+  <div class="container py-2">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4 xauto-tasks-header>Tasks</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th class="d-none d-sm-table-cell">#</th>
+                <th>Project</th>
+                <th class="d-none d-sm-table-cell">Course</th>
+                <th class="d-none d-sm-table-cell">Subject Area</th>
+                <th class="d-none d-sm-table-cell">Text</th>
+                <th class="d-none d-sm-table-cell">completed</th>
+                <th class="d-none d-sm-table-cell">Time Spent</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let task of (tasks$ | async | ordertask); let i = index">
+                <td class="d-none d-sm-table-cell">{{ i + 1 }}</td>
+                <td>{{ task.project }}</td>
+                <td class="d-none d-sm-table-cell">{{ task.course }}</td>
+                <td class="d-none d-sm-table-cell">{{ task.subjectArea }}</td>
+                <td class="d-none d-sm-table-cell">{{ task.text }}</td>
+                <td class="d-none d-sm-table-cell">
+                  {{ task.completePercentage }}
+                  <div class="progress progress-xs">
+                    <div class="progress-bar bg-success" role="progressbar" [style.width.%]="task.completePercentage"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </td>
+                <td class="d-none d-sm-table-cell">
+                  <div class="small text-muted">Minutes</div>
+                  <strong> {{ (task.timeSpent / 60).toFixed(2) }}</strong>
+                </td>
+                <td>
+                  <a (click)="onTaskCopy(task)" class="btn btn-outline-secondary"> <i class="fa fa-clipboard"></i> </a>
+                </td>
+                <td>
+                  <a (click)="onTaskStart(task)" class="btn btn-outline-secondary">
+                    <i class="fa fa-caret-right"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- PAGINATION -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="main-footer" class="bg-dark text-white mt-5 p-5">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p class="lead text-center">Copyright &copy; <span id="year"></span> Tasked</p>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -10,7 +10,7 @@
 /src/app/guards
 /src/app/shared
 /src/app/store
-/src/app/tasks
+# /src/app/tasks
 /src/app/utils
 /src/app/assets
 /src/environments

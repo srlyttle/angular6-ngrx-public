@@ -1,0 +1,130 @@
+<header id="main-header" class="py-2 bg-secondary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+
+<ng-container *ngIf="(subjectAreas$ | async) as formLookupLists">
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" novalidate>
+    <section id="actions" class="py-4 mb-4 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <button (click)="toggleDetail()" type="button" class="btn btn-info btn-block">
+              <i class="fas fa-arrow-left"></i> Toggle Detail
+            </button>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-success btn-block"><i class="fas fa-arrow-left"></i> Add</button>
+          </div>
+          <div class="col-md-3">
+            <button (click)="cancel()" type="button" class="btn btn-danger btn-block">
+              <i class="fas fa-arrow-left"></i> Cancel
+            </button>
+          </div>
+          <div class="col-md-3">
+            <button *ngIf="populate" (click)="populateFromSelected()" type="button" class="btn btn-info btn-block">
+              <i class="fas fa-arrow-left"></i> Populate
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="form-group">
+      <label for="text">Text</label>
+      <input formControlName="text" type="text" name="text" class="form-control" id="text"
+        [ngClass]="{ 'is-invalid': submitted && f.text.errors }" placeholder="text" />
+      <div *ngIf="submitted && f.text.errors" class="invalid-feedback">
+        <div *ngIf="f.text.errors.minlength">text must be at least 5 characters</div>
+        <div *ngIf="f.text.errors.required">text is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="content">description</label>
+      <textarea formControlName="description" rows="3" name="description" class="form-control" id="description"
+        placeholder="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+        <div *ngIf="f.description.errors.minlength">description must be at least 10 characters</div>
+        <div *ngIf="f.description.errors.required">description is required</div>
+      </div>
+    </div>
+    <div class="form-group collapse"></div>
+    <div class="form-group" [ngClass]="{
+        collapse: hideDetailView
+      }">
+      <label for="exampleFormControlSelect1">course</label>
+      <select formControlName="course" class="form-control" id="course"
+        [ngClass]="{ 'is-invalid': submitted && f.course.errors }">
+        <option *ngFor="let course of (courseList$ | async)" [value]="course">{{ course }}</option>
+      </select>
+    </div>
+
+    <div class="form-group" [ngClass]="{
+        collapse: hideDetailView
+      }">
+      <label for="courseSection">courseSection</label>
+      <input formControlName="courseSection" type="text" name="courseSection" class="form-control" id="courseSection"
+        placeholder="courseSection" />
+    </div>
+    <div class="form-group">
+      <label for="project">Projects</label>
+      <select formControlName="project" class="form-control" id="project">
+        <option *ngFor="let project of (projectList$ | async)" [value]="project">{{ project }}</option>
+      </select>
+      <div *ngIf="submitted && f.subjectArea.errors" class="invalid-feedback">
+        <div *ngIf="f.subjectArea.errors.required">subjectArea is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="milestone">Milestone</label>
+      <select formControlName="milestone" class="form-control" id="milestone">
+        <option *ngFor="let milestone of (milestoneList$ | async)" [value]="milestone">{{ milestone }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="subjectArea">subjectArea</label>
+      <select formControlName="subjectArea" class="form-control" id="subjectArea"
+        [ngClass]="{ 'is-invalid': submitted && f.subjectArea.errors }">
+        <option *ngFor="let subjectArea of (subjectAreas$ | async)" [value]="subjectArea">{{ subjectArea }}</option>
+      </select>
+      <div *ngIf="submitted && f.subjectArea.errors" class="invalid-feedback">
+        <div *ngIf="f.subjectArea.errors.required">subjectArea is required</div>
+      </div>
+    </div>
+
+    <div *ngIf="f.acceptance" class="form-group" formArrayName="acceptance">
+      <button class="btn btn-success btn-block" type="button" (click)="onAddAcceptance()">Add Acceptance</button>
+
+      <div class="form-group" *ngFor="let acceptanceCriteria of f.acceptance.controls; let i = index">
+        <label class="col-md-2 control-label" [attr.for]="i">Acceptance</label>
+
+        <input class="form-control" [id]="i" type="text" placeholder="acceptanceCriteria" [formControlName]="i" />
+      </div>
+    </div>
+
+    <section id="actions" class="py-4 mb-4 bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <button (click)="toggleDetail()" type="button" class="btn btn-info btn-block">
+              <i class="fas fa-arrow-left"></i> Toggle Detail
+            </button>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-success btn-block"><i class="fas fa-arrow-left"></i> Add</button>
+          </div>
+          <div class="col-md-3">
+            <button (click)="cancel()" type="button" class="btn btn-danger btn-block">
+              <i class="fas fa-arrow-left"></i> Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+</ng-container>
